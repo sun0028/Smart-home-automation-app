@@ -18,9 +18,7 @@ migrate_working_dir/
 *.iws
 .idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
+# VS Code related (uncomment if you want to include .vscode in Git - generally not recommended for settings, but okay for tasks/launch configs)
 #.vscode/
 
 # Flutter/Dart/Pub related
@@ -31,7 +29,22 @@ migrate_working_dir/
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
-/build/
+pubspec.lock
+/build/  # Already have this, keeping it for clarity
+android/.gradle
+android/build/
+android/app/build/
+ios/Podfile.lock
+ios/Flutter/App.framework/
+ios/Flutter/Flutter.framework/
+macos/Flutter/App.framework/
+macos/Flutter/Flutter.framework/
+linux/flutter/ephemeral/
+windows/flutter/ephemeral/
+**/generated_plugin_registrant.dart
+**/ios/Runner.xcodeproj/project.xcworkspace/
+**/macos/Runner.xcodeproj/project.xcworkspace/
+
 
 # Symbolication related
 app.*.symbols
@@ -43,3 +56,16 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+
+# OS generated files # (Adding a clearer section header)
+Thumbs.db
+xcuserdata/
+
+
+# IDE specific files (Redundant as already covered above, but keeping for completeness if you have other IDE files)
+*.swp
+*.swo
+# *.iml  (Already covered above)
+# .idea/ (Already covered above)
+# .vscode/ (Already covered above - and commented out as per best practice)
