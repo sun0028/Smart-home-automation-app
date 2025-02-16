@@ -1,0 +1,29 @@
+{
+    "project_info": {
+      "project_number": "1036046225741",
+      "project_id": "iot-sha-760c8",
+      "storage_bucket": "iot-sha-760c8.firebasestorage.app"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:1036046225741:android:4da7aa1964c94b5d5ca704",
+          "android_client_info": {
+            "package_name": "com.example.my_app"
+          }
+        },
+        "oauth_client": [],
+        "api_key": [
+          {
+            "current_key": "AIzaSyB-Rbszh2Hbydvyphz_oIhY9SsIWamsrBY"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": []
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }
