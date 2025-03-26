@@ -25,7 +25,7 @@ class _DeviceControlPageState extends State<DeviceControlPage> {
             onPressed: (index) => setState(() => _selectedIndex = index),
             children: const [
               Padding(padding: EdgeInsets.all(8.0), child: Text("All Devices")),
-              Padding(padding: EdgeInsets.all(8.0), child: Text("Groups")),
+              Padding(padding: EdgeInsets.all(8.0), child: Text("Rooms")),
             ],
           ),
           Expanded(
@@ -42,7 +42,6 @@ class _DeviceControlPageState extends State<DeviceControlPage> {
   }
 
   void _showAddOptions() {
-    // ... (_showAddOptions remains the same)
 
    showModalBottomSheet(
     context: context,
@@ -58,7 +57,7 @@ class _DeviceControlPageState extends State<DeviceControlPage> {
         ),
         ListTile(
           leading: const Icon(Icons.group),
-          title: const Text("Add Group"),
+          title: const Text("Add Room"),
           onTap: () {
             Navigator.pop(context);
             _addGroup();
@@ -77,7 +76,7 @@ class _DeviceControlPageState extends State<DeviceControlPage> {
   List devices = groupDoc.get('devices');
   devices.remove(deviceId);
   await FirebaseFirestore.instance.collection('groups').doc(groupId).update({'devices': devices});
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Device "$deviceName" removed from group.')));
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Device "$deviceName" removed from Room.')));
 }
 
   Widget _buildAllDevices() {
@@ -142,7 +141,7 @@ Widget _buildGroups() {
         return const Center(child: CircularProgressIndicator());
       }
       if (snapshot.data!.docs.isEmpty) {
-        return const Center(child: Text("No groups found."));
+        return const Center(child: Text("No Rooms found."));
       }
       final groups = snapshot.data!.docs;
 
@@ -197,7 +196,7 @@ Widget _buildGroups() {
 
  List<Widget> _buildGroupDeviceList(String groupId, List<dynamic>? deviceIds) {
   if (deviceIds == null || deviceIds.isEmpty) {
-    return [const ListTile(title: Text("No devices in this group."))];
+    return [const ListTile(title: Text("No devices in this Room."))];
   }
 
   return deviceIds.map((deviceId) {
@@ -296,10 +295,10 @@ Widget _buildGroups() {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Edit Group"),
+        title: const Text("Edit Room"),
         content: TextField(
           controller: nameController,
-          decoration: const InputDecoration(hintText: "Group Name"),
+          decoration: const InputDecoration(hintText: "Room Name"),
         ),
         actions: [
           TextButton(
@@ -352,10 +351,10 @@ Widget _buildGroups() {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Add Group"),
+        title: const Text("Add Room"),
         content: TextField(
           controller: nameController,
-          decoration: const InputDecoration(hintText: "Group Name"),
+          decoration: const InputDecoration(hintText: "Room Name"),
         ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
@@ -384,7 +383,7 @@ Widget _buildGroups() {
 
   if (groupsSnapshot.docs.isEmpty) {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('No groups available. Add a group first.')));
+        content: Text('No Rooms available. Add a Room first.')));
     return;
   }
 
@@ -393,11 +392,11 @@ Widget _buildGroups() {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text("Add '$deviceName' to Group"), // Display device name
+      title: Text("Add '$deviceName' to Room"), // Display device name
       content: StatefulBuilder(
         builder: (context, setState) {
           return DropdownButton<String>(
-            hint: const Text("Select Group"),
+            hint: const Text("Select Room"),
             value: selectedGroupId,
             items: groupsSnapshot.docs.map((group) {
               return DropdownMenuItem<String>(
@@ -418,7 +417,7 @@ Widget _buildGroups() {
           onPressed: () async {
             if (selectedGroupId == null) {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('Please select a group.')));
+                  content: Text('Please select a Room.')));
               return;
             }
 
@@ -435,10 +434,10 @@ Widget _buildGroups() {
                   .update({'devices': devices});
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text('Device "$deviceName" added to group.')));
+                  content: Text('Device "$deviceName" added to Room.')));
             } else {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('Device is already in this group.')));
+                  content: Text('Device is already in this Room.')));
             }
           },
           child: const Text("Add"),

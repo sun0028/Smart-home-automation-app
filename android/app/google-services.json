@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1036046225741",
+    "firebase_url": "https://iot-sha-760c8-default-rtdb.firebaseio.com",
     "project_id": "iot-sha-760c8",
     "storage_bucket": "iot-sha-760c8.firebasestorage.app"
   },

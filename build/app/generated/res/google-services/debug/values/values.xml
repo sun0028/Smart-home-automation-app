@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gcm_defaultSenderId" translatable="false">1036046225741</string>
+    <string name="google_api_key" translatable="false">AIzaSyB-Rbszh2Hbydvyphz_oIhY9SsIWamsrBY</string>
+    <string name="google_app_id" translatable="false">1:1036046225741:android:4da7aa1964c94b5d5ca704</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyB-Rbszh2Hbydvyphz_oIhY9SsIWamsrBY</string>
+    <string name="google_storage_bucket" translatable="false">iot-sha-760c8.firebasestorage.app</string>
+    <string name="project_id" translatable="false">iot-sha-760c8</string>
+</resources>

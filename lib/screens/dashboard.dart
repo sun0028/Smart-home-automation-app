@@ -215,7 +215,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
 
   Widget _buildQuickActionsSection(ColorScheme theme) {
-   String userId = _auth.currentUser!.uid;
+  String userId = _auth.currentUser!.uid;
 
   return StreamBuilder<QuerySnapshot>(
     stream: FirebaseFirestore.instance.collection('devices').where('userId', isEqualTo: userId).snapshots(),
@@ -237,9 +237,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           }
 
           Map<String?, List<DocumentSnapshot>> devicesByGroup = {};
-          devicesByGroup[null] = [];
-
+          devicesByGroup[null] = []; // Initialize ungrouped list
           List<DocumentSnapshot> allGroups = [];
+          Set<String> groupedDeviceIds = {}; // To track devices that are in ANY group
 
           if (groupSnapshot.hasData && groupSnapshot.data != null) {
             allGroups = groupSnapshot.data!.docs;
@@ -250,12 +250,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
               List<dynamic> deviceIds = groupData['devices'] ?? [];
 
               devicesByGroup[groupId] = devices.where((device) => deviceIds.contains(device.id)).toList();
-              // Add ungrouped devices
-              devicesByGroup[null]!.addAll(devices.where((device) => !deviceIds.contains(device.id)).toList());
+              // Add deviceIds to the Set of grouped devices
+              deviceIds.forEach((deviceId) => groupedDeviceIds.add(deviceId.toString())); // Ensure deviceId is String
             }
-          } else {
-            devicesByGroup[null] = devices.toList();
           }
+
+          // After processing all groups, filter for ungrouped devices
+          devicesByGroup[null] = devices.where((device) => !groupedDeviceIds.contains(device.id)).toList();
+
 
           return ListView(
             children: devicesByGroup.entries.map((entry) {
@@ -264,6 +266,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
               String groupName = groupId != null
                   ? (allGroups.firstWhere((group) => group.id == groupId)['name'] ?? "Unknown Group")
                   : "Ungrouped Devices";
+
+              // Only show "Ungrouped Devices" if there are any ungrouped devices
+              if (groupId == null && groupDevices.isEmpty) {
+                return const SizedBox.shrink(); // Return an empty widget if no ungrouped devices
+              }
+
 
               return Card(
                 color: theme.surfaceVariant,
@@ -293,5 +301,5 @@ class _DashboardScreenState extends State<DashboardScreen> {
       );
     },
   );
-  }
+}
 }
